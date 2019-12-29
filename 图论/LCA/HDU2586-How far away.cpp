@@ -10,7 +10,6 @@ struct Edge{
     int u,v;
     ll w;
 };
-
 const int max_n = 40005;
 int T,n,m;
 vector<Edge> vec[max_n];
@@ -34,14 +33,11 @@ void dfs(int u){
         }
     }
     for(int t : query[u]){
-        if(finish[t]){
+        if(finish[t])
             for(int i = 0;i < m;i ++){
                 Pair& pair = queries[i];
-                if((pair.first == u && pair.second == t) || (pair.first == t && pair.second == u)){
-                    ans[i] = dis[t] + dis[u] - 2 * dis[find(t)];
-                }
+                if((pair.first == u && pair.second == t) || (pair.first == t && pair.second == u)) ans[i] = dis[t] + dis[u] - 2 * dis[find(t)];
             }
-        }
     }
     finish[u] = 1;
 }
