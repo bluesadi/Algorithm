@@ -1,6 +1,5 @@
 #define LOCAL
 #include <cstdio>
-#include <algorithm>
 #include <vector>
 #include <cstring>
 using namespace std;
@@ -47,7 +46,7 @@ void dfs(int u){
     finish[u] = 1;
 }
 
-int main() {
+int main() {//觉得代码写得很丑，改天看看能不能改进
 #ifdef LOCAL
     freopen("D:/ACM/AlgorithmStudy/test.in", "r", stdin);
 #endif
