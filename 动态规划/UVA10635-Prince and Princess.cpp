@@ -17,7 +17,7 @@ int main() {
         }
         dp[1] = s2[1];
         int len = 1;
-        for(int i = 2;i <= cnt;i ++){//用二分查找在dp数组里找到第一个比s2[i]大的数
+        for(int i = 2;i <= cnt;i ++){
             int low = 1, high = len,mid;
             while (low <= high) {
                 mid = (low + high) / 2;
