@@ -17,7 +17,7 @@ int main() {
         }
         dp[1] = s2[1];
         int len = 1;
-        for(int i = 2;i <= cnt;i ++){
+        for(int i = 2;i <= cnt;i ++){//
             int low = 1, high = len,mid;
             while (low <= high) {
                 mid = (low + high) / 2;
