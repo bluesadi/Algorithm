@@ -1,6 +1,6 @@
 #define LOCAL
 #define ms(x,v) memset(x,v,sizeof x)
-#define inf 1 << 30
+#define inf 1 << 28
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
@@ -13,12 +13,12 @@ int main(){
     freopen("D:/ACM/Algorithm/test.in","r",stdin);
 #endif
     while(scanf("%d%d",&m,&n) != EOF){
-        ms(dp,0),ms(last_dp,0);
+        ms(dp,0),ms(last_dp,0);                                                                                     
         for(int i = 1;i <= n;i ++) scanf("%d",arr + i);
-        //dp[j] = max{dp[j - 1] + arr[j],last_dp[k] + arr[j]}(i - 1 <= k < j)
+        //dp[j] = max{dp[j - 1] + arr[j],last_dp[k] + arr[j]}(i - 1 <= k <= j - 1)
         int kmax,ans = -inf;
         for(int i = 1;i <= m;i ++){
-            kmax = -inf;
+            kmax = i == 1 ? -inf : last_dp[i - 1];
             for(int j = i;j <= n;j ++){
                 dp[j] = max(dp[j - 1] + arr[j],kmax + arr[j]);
                 kmax = max(kmax,last_dp[j]);
