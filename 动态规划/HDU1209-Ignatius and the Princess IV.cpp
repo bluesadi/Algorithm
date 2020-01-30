@@ -5,7 +5,7 @@
 #include <cstring>
 #include <algorithm>
 
-int N,a[(int)5e7 + 5],ans;
+int N,a[(int)5e6 + 5],ans;
 
 int main(){
 #ifdef LOCAL
@@ -13,7 +13,7 @@ int main(){
 #endif
     while(scanf("%d",&N) != EOF){
         ms(a,0);
-        while(N--){
+        for(int i = 0;i < N;i ++){
             int tmp;
             scanf("%d",&tmp);
             if(++a[tmp] >= (N + 1) / 2) ans = tmp;
