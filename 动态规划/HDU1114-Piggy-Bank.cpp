@@ -24,6 +24,7 @@ int main(){
             for(int j = W[i];j <= total;j ++){
                 dp[j] = min(dp[j],dp[j - W[i]] + P[i]);
             }
+            
         }
         if(dp[total] != inf) printf("The minimum amount of money in the piggy-bank is %d.\n",dp[total]);
         else printf("This is impossible.\n");
