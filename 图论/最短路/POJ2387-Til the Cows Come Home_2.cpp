@@ -1,5 +1,3 @@
-#define LOCAL
-#define debug(x) cout << "debug:" << x << endl
 #define ms(x,v) memset(x,v,sizeof x)
 #define inf 0x3f3f3f3f
 #include <cstdio>
@@ -24,9 +22,6 @@ int ans[1005],N,T,visit[1005];
 vector<Edge> edges[1005];
 
 int main(){
-#ifdef LOCAL
-    freopen("D:/ACM/Algorithm/test.in","r",stdin);
-#endif
     scanf("%d%d",&T,&N);
     ms(visit,0);
     for(int i = 0;i < T;i ++){
