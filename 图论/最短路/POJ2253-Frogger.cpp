@@ -1,5 +1,3 @@
-#define LOCAL
-#define debug(x) cout << "debug:" << x << endl
 #define ms(x,v) memset(x,v,sizeof x)
 #include <cstdio>
 #include <cstring>
@@ -11,9 +9,6 @@ int x[205],y[205],n,cnt = 1;
 double ans[205][205];
 
 int main(){
-#ifdef LOCAL
-    freopen("D:/ACM/Algorithm/test.in","r",stdin);
-#endif
     while(scanf("%d",&n) != EOF && n){
         for(int i = 1;i <= n;i ++) scanf("%d%d",x + i,y + i);
         for(int s = 1;s <= n;s ++) 
