@@ -1,5 +1,3 @@
-#define LOCAL
-#define debug(x) cout << "debug:" << x << endl
 #define ms(x,v) memset(x,v,sizeof x)
 #define inf 0x3f3f3f3f
 #include <iostream>
@@ -10,9 +8,6 @@ using namespace std;
 int d[1005],N,T,w[1005][1005],visit[1005];
 
 int main(){
-#ifdef LOCAL
-    freopen("D:/ACM/Algorithm/test.in","r",stdin);
-#endif
     scanf("%d%d",&T,&N);
     ms(d,inf),ms(w,inf),ms(visit,0);
     for(int i = 0;i < T;i ++){
@@ -27,5 +22,5 @@ int main(){
         visit[k] = 1;
         for(int j = 1;j <= N;j ++) d[j] = min(d[j],w[k][j] + d[k]);
     }
-    printf("%d",d[1]);
+    printf("%d",d[1]); 
 }
