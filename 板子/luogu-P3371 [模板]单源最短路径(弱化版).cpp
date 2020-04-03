@@ -1,6 +1,3 @@
-#define LOCAL
-#include <iostream>
-#define debug(x) cout << "debug:" << x << endl
 #include <cstdio>
 #include <algorithm>
 #include <vector>
@@ -32,9 +29,6 @@ void dijkstra(){
 }
 
 int main(){
-#ifdef LOCAL
-    freopen("D:/Algorithm/test.in","r",stdin);
-#endif
     scanf("%d%d%d",&n,&m,&s);
     for(int i = 0;i < m;i ++){
         int u,v,w;
