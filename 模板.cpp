@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <algorithm>
 using namespace std;
-
+#define LL long long
 
 int main(){
 #ifdef LOCAL
