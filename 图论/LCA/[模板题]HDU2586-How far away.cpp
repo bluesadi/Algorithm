@@ -7,40 +7,34 @@
 #include <vector>
 #include <cstring>
 using namespace std;
-#define LL long long
+#define MAXN 40050
 
-int T,n,m,pa[40050][20],depth[40050];
-LL dis[40050][20];
-vector<pair<int,int>> edges[40050];
+int T,n,m,pa[MAXN][20],depth[MAXN],dist[MAXN];
+vector<pair<int,int>> edges[MAXN];
 
-void dfs(int i = 1,int d = 1){
-    depth[i] = d;
+void dfs(int i){
+    for(int up = 1;up < 20;up ++) pa[i][up] = pa[pa[i][up - 1]][up - 1];
     for(auto &edge : edges[i]){
         if(depth[edge.first]) continue;
-        dfs(edge.first,d + 1);
         pa[edge.first][0] = i;
-        dis[edge.first][0] = edge.second;
+        depth[edge.first] = depth[i] + 1;
+        dist[edge.first] = dist[i] + edge.second;
+        dfs(edge.first);
     }
 }
 
-LL lca(int a,int b){
-    if(depth[a] < depth[b]) return lca(b,a);
-    int maxup = 0;
-    LL ans = 0;
-    while((1 << (maxup + 1)) <= depth[a]) maxup ++;
-    for(int i = maxup;i >= 0;i --){
-        if(depth[a] - (1 << i) >= depth[b]) ans += dis[a][i],a = pa[a][i];
-    }
-    for(int i = maxup;i >= 0;i --){
-        if(pa[a][i] != pa[b][i]){
-            ans += dis[a][i];
-            ans += dis[b][i];
-            a = pa[a][i];
-            b = pa[b][i];
+int lca(int u,int v){
+    if(depth[u] < depth[v]) return lca(v,u);
+    int distu = dist[u],distv = dist[v];
+    for(int i = 19;i >= 0;i --) if(depth[u] - (1 << i) >= depth[v]) u = pa[u][i];
+    for(int i = 19;i >= 0;i --){
+        if(pa[u][i] != pa[v][i]){
+            u = pa[u][i];
+            v = pa[v][i];
         }
     }
-    if(a != b) ans += dis[a][0] + dis[b][0];
-    return ans;
+    if(u != v) return distu + distv - 2 * dist[pa[u][0]];
+    return distu + distv - 2 * dist[u];
 }
 
 int main(){
@@ -49,8 +43,9 @@ int main(){
 #endif
     scanf("%d",&T);
     while(T--){
-        for(int i = 0;i < 40050;i++) edges[i].clear();
-        memset(pa,0,sizeof pa),memset(dis,0,sizeof dis),memset(depth,0,sizeof depth);
+        for(int i = 0;i < MAXN;i++) edges[i].clear();
+        memset(pa,0,sizeof pa),memset(dist,0,sizeof dist),memset(depth,0,sizeof depth);
+        depth[1] = 1;
         scanf("%d%d",&n,&m);
         for(int i = 0;i < n - 1;i ++){
             int u,v,w;
@@ -58,17 +53,11 @@ int main(){
             edges[u].push_back({v,w});
             edges[v].push_back({u,w});
         }
-        dfs();
-        for(int i = 1;(1 << i) <= n;i ++){
-            for(int j = 1;j <= n;j ++){
-                pa[j][i] = pa[pa[j][i - 1]][i - 1];
-                dis[j][i] = dis[j][i - 1] + dis[pa[j][i - 1]][i - 1];
-            }
-        }
+        dfs(1);
         for(int i = 0;i < m;i ++){
             int a,b;
             scanf("%d%d",&a,&b);
-            printf("%lld\n",lca(a,b));
+            printf("%d\n",lca(a,b));
         }
     }
 }

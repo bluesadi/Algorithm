@@ -1,6 +1,7 @@
 #define LOCAL
 #include <iostream>
 #define debug(x) cout << "debug:" << x << endl
+#define dot << "," <<
 #include <cstdio>
 #include <algorithm>
 #include <vector>
@@ -9,18 +10,19 @@ using namespace std;
 #define Edge pair<int,int>
 #define MAXN 40050
 
-int T,n,m,depth[MAXN],dist[MAXN],pa[MAXN][20],tin[MAXN],tout[MAXN],t;
+int n,m,pa[MAXN][20],dist[MAXN],depth[MAXN],tin[MAXN],tout[MAXN],t = 1;
 vector<Edge> edges[MAXN];
 
 void dfs(int i){
     tin[i] = t++;
     for(int up = 1;up < 20;up ++) pa[i][up] = pa[pa[i][up - 1]][up - 1];
     for(Edge &edge : edges[i]){
-        if(depth[edge.first]) continue;
-        dist[edge.first] = edge.second + dist[i];
-        depth[edge.first] = depth[i] + 1;
-        pa[edge.first][0] = i;
-        dfs(edge.first);
+        int v = edge.first,w = edge.second;
+        if(depth[v]) continue;
+        depth[v] = depth[i] + 1;
+        dist[v] = dist[i] + w;
+        pa[v][0] = i;
+        dfs(v);
     }
     tout[i] = t++;
 }
@@ -42,23 +44,20 @@ int main(){
 #ifdef LOCAL
     freopen("D:/Algorithm/test.in","r",stdin);
 #endif
-    scanf("%d",&T);
-    while(T--){
-        for(int i = 0;i < MAXN;i ++) edges[i].clear();
-        memset(depth,0,sizeof depth);
-        dist[1] = 0,depth[1] = 1,t = 1;
-        scanf("%d%d",&n,&m);
-        for(int i = 0;i < n - 1;i ++){
-            int u,v,w;
-            scanf("%d%d%d",&u,&v,&w);
-            edges[u].push_back(make_pair(v,w));
-            edges[v].push_back(make_pair(u,w));
-        }
-        dfs(1);
-        for(int i = 0;i < m;i ++){
-            int a,b;
-            scanf("%d%d",&a,&b);
-            printf("%d\n",lca(a,b));
-        }
+    scanf("%d%d",&n,&m);
+    for(int i = 0;i < MAXN;i++) edges[i].clear();
+    memset(pa,0,sizeof pa),memset(dist,0,sizeof dist),memset(depth,0,sizeof depth);
+    depth[1] = 1;
+    for(int i = 0;i < n - 1;i ++){
+        int x,y,w;
+        scanf("%d%d%d",&x,&y,&w);
+        edges[x].push_back(make_pair(y,w));
+        edges[y].push_back(make_pair(x,w));
+    }
+    dfs(1);
+    while(m--){
+        int u,v;
+        scanf("%d%d",&u,&v);
+        printf("%d\n",lca(u,v));
     }
 }
