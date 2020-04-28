@@ -1,6 +1,6 @@
 #define LOCAL
 #include <iostream>
-#define debug(x) cout << "debug:" << x << endl
+#define debug(x) cout << "debug:" << x << endl;
 #define dot << "," <<
 #include <cstdio>
 #include <algorithm>
