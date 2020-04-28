@@ -9,13 +9,23 @@
 using namespace std;
 #define MAXN 40050
 
-int n,m,visit[MAXN],tin[MAXN],tout[MAXN],t = 1,root;
-vector<int> edges[MAXN];
+int n,m,visit[MAXN],tin[MAXN],tout[MAXN],t = 1,root,head[MAXN],cnt = 0;
+
+struct Edge{
+    int v,next;
+}edges[2 * MAXN];
+
+void addEdge(int x,int y){
+    edges[++cnt].v = y;
+    edges[cnt].next = head[x];
+    head[x] = cnt;
+}
 
 void dfs(int i){
     tin[i] = t++;
     visit[i] = 1;
-    for(int v : edges[i]){
+    for(int k = head[i];k;k = edges[k].next){
+        int v = edges[k].v;
         if(visit[v]) continue;
         dfs(v);
     }
@@ -23,6 +33,7 @@ void dfs(int i){
 }
 
 bool isAncestor(int u,int v){
+    if(!u) return true;
     return tin[u] <= tin[v] && tout[u] >= tout[v];
 }
 
@@ -31,7 +42,6 @@ int main(){
     freopen("D:/Algorithm/test.in","r",stdin);
 #endif
     scanf("%d",&n);
-    for(int i = 0;i < MAXN;i++) edges[i].clear();
     memset(visit,0,sizeof visit);
     for(int i = 0;i < n;i ++){
         int x,y;
@@ -40,8 +50,8 @@ int main(){
             root = x;
             continue;
         }
-        edges[x].push_back(y);
-        edges[y].push_back(x);
+        addEdge(x,y);
+        addEdge(y,x);
     }
     dfs(root);
     scanf("%d",&m);
